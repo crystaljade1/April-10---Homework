@@ -66,25 +66,31 @@ struct Game: Equatable {
 
 
 // Create a method on the type Game: requestScore(of team: Team) -> Int
-
-var teamOneArray: [Int] = []
-var teamTwoArray: [Int] = []
-let score = Int()
-
-mutating func requestScore(team: Team) -> Int {
-    if team == teamOne {
-        for _ in scoringEventsforTeamOne {
-            teamOneArray.append(pointValue)
-        }
-    } else if team == teamTwo {
-        for _ in scoringEventsforTeamTwo {
-            teamTwoArray.append(pointValue)
-        }
-    }
     
-    return score
-}
+    var teamOneScore = Int()
+    var teamTwoScore = Int()
 
+    
+    public func requestScore(of team: Team) -> Int? {
+        
+        var score: Int = 0
+        
+        
+        if team == teamOne {
+            for event in scoringEventsforTeamOne {
+                score += event.pointValue
+            }
+        } else if team == teamTwo {
+            for event in scoringEventsforTeamOne {
+                score += event.pointValue
+            }
+        } else {
+            return nil
+        }
+        
+        return score
+        
+    }
 }
 
 // Create a function named record(event: ScoringEvent, for team: Team, in game: Game) -> Game? that returns a new game with the event added so long as the team is playing within the provided game.
@@ -92,14 +98,18 @@ mutating func requestScore(team: Team) -> Int {
 
 func record(event: ScoringEvent, team: Team, game: Game) -> Game? {
     
+    let game = Game(teamOne: Team(), teamTwo: Team())
+    
     var newGame = game
     
     if team == game.teamOne {
         newGame.scoringEventsforTeamOne = []
         newGame.scoringEventsforTeamOne.append(event)
+        print(newGame.scoringEventsforTeamOne)
         
     } else if team == game.teamTwo {
         newGame.scoringEventsforTeamTwo.append(event)
+        print(newGame.scoringEventsforTeamTwo)
     }
     
     return newGame
@@ -107,9 +117,4 @@ func record(event: ScoringEvent, team: Team, game: Game) -> Game? {
 }
 
 
-var game = Game(teamOne: Team(), teamTwo: Team())
-
-// Create a method on the type Game requestScore(of team: Team) -> Int
-
-// See Game
 
