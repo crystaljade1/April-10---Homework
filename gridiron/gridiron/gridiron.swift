@@ -67,21 +67,16 @@ struct Game: Equatable {
 
 // Create a method on the type Game: requestScore(of team: Team) -> Int
     
-    var teamOneScore = Int()
-    var teamTwoScore = Int()
-
-    
     public func requestScore(of team: Team) -> Int? {
         
-        var score: Int = 0
-        
+        var score = 0
         
         if team == teamOne {
             for event in scoringEventsforTeamOne {
                 score += event.pointValue
             }
         } else if team == teamTwo {
-            for event in scoringEventsforTeamOne {
+            for event in scoringEventsforTeamTwo {
                 score += event.pointValue
             }
         } else {

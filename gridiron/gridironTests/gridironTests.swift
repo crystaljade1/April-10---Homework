@@ -25,16 +25,22 @@ class gridironTests: XCTestCase {
     }
     
     
-    func testRequestScoreOfOneTeam() {
-        let game = Game(teamOne: "New York Giants", teamTwo: "New York Jets")
-        let scoringEventsforTeamTwo: [ScoringEvent] = [.twoPointConversion, .fieldGoal]
-        var score = (8, 2)
-        var teamOneScore: Int = 8
-        
-        let result = Game(requestScore(of: "New York Giants"))
-        let expected = teamOneScore
+    func testRequestScoreOfOneTeamWithNoPoints() {
+        var game = Game(teamOne: "New York Giants", teamTwo: "New York Jets")
+        game.scoringEventsforTeamOne = []
+        let expected = 0
+        let result = game.requestScore(of: "New York Giants")
         XCTAssertEqual(result, expected)
     }
+    
+    func testRequestScoreOfTeamOneWithPoints() {
+        var game = Game(teamOne: "New York Giants", teamTwo: "New York Jets")
+        game.scoringEventsforTeamTwo = [.fieldGoal, .safety]
+        let expected = 5
+        let result = game.requestScore(of: "New York Jets")
+        XCTAssertEqual(result, expected)
+    }
+    
     
     func testRecord() {
         let game = Game(teamOne: Team(), teamTwo: Team())
